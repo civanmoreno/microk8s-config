@@ -26,22 +26,22 @@ spec:
         - name: MYSQL_HOST
           valueFrom:
             secretKeyRef:
-              name: mysql-secret
+              name: lamp-k8s-secret
               key: MYSQL_HOST
         - name: MYSQL_DATABASE
           valueFrom:
             secretKeyRef:
-              name: mysql-secret
+              name: lamp-k8s-secret
               key: MYSQL_DATABASE
         - name: MYSQL_USER
           valueFrom:
             secretKeyRef:
-              name: mysql-secret
+              name: lamp-k8s-secret
               key: MYSQL_USER
         - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mysql-secret
+              name: lamp-k8s-secret
               key: MYSQL_PASSWORD
         livenessProbe:
           httpGet:
