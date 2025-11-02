@@ -1,20 +1,8 @@
 apiVersion: v1
-kind: Secret
-metadata:
-  name: mysql-secret
-  namespace: php-lamp
-type: Opaque
-stringData:
-  MYSQL_ROOT_PASSWORD: "rootpassword"
-  MYSQL_DATABASE: "lamp_db"
-  MYSQL_USER: "lamp_user"
-  MYSQL_PASSWORD: "lamp_password"
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pvc
-  namespace: php-lamp
+  namespace: $NAMESPACE
 spec:
   accessModes:
     - ReadWriteOnce
@@ -25,21 +13,21 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
-  namespace: php-lamp
+  name: lamp-k8s-mysql
+  namespace: $NAMESPACE
   labels:
-    app: mysql
+    app: lamp-k8s-mysql
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mysql
+      app: lamp-k8s-mysql
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: mysql
+        app: lamp-k8s-mysql
     spec:
       containers:
       - name: mysql
@@ -99,11 +87,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql
-  namespace: php-lamp
+  name: lamp-k8s-mysql
+  namespace: $NAMESPACE
 spec:
   selector:
-    app: mysql
+    app: lamp-k8s-mysql
   ports:
   - protocol: TCP
     port: 3306
