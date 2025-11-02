@@ -2,11 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: lamp-k8s-apache
-  namespace: $NAMESPACE
+  namespace: lamp-k8s
   labels:
     app: lamp-k8s-apache
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: lamp-k8s-apache
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: lamp-k8s-apache
-        image: $REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+        image: localhost:32000/lamp-k8s:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
@@ -60,7 +60,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: lamp-k8s-apache
-  namespace: $NAMESPACE
+  namespace: lamp-k8s
 spec:
   selector:
     app: lamp-k8s-apache
@@ -68,5 +68,5 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 80
-    nodePort: 30080
+    nodePort: 30081
   type: NodePort
